@@ -32,7 +32,7 @@ module OpenapiFirst
               request,
               request_method:,
               path:,
-              content_type: request.media_type
+              content_type: request.content_type
             )
           end
           build_responses(operation_object).each do |response|
