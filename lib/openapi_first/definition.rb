@@ -50,7 +50,7 @@ module OpenapiFirst
     # @param [Boolean] raise_error Whether to raise an error if validation fails.
     # @return [ValidatedRequest] The validated request object.
     def validate_request(request, raise_error: false)
-      route = @router.match(request.request_method, request.path, content_type: request.content_type)
+      route = @router.match(request.request_method, request.path, content_type: request.media_type)
       validated = if route.error
                     ValidatedRequest.new(request, error: route.error)
                   else
@@ -68,7 +68,7 @@ module OpenapiFirst
     # @param raise_error [Boolean] Whether to raise an error if validation fails.
     # @return [ValidatedResponse] The validated response object.
     def validate_response(rack_request, rack_response, raise_error: false)
-      route = @router.match(rack_request.request_method, rack_request.path, content_type: rack_request.content_type)
+      route = @router.match(rack_request.request_method, rack_request.path, content_type: rack_request.media_type)
       return if route.error # Skip response validation for unknown requests
 
       response_match = route.match_response(status: rack_response.status, content_type: rack_response.content_type)
